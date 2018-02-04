@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Kinect;
-using Coding4Fun.Kinect.WinForm; 
+using Coding4Fun.Kinect.WinForm;
+
 
 namespace WindowsFormsApp1
 {
@@ -16,6 +17,7 @@ namespace WindowsFormsApp1
     {
 
         private KinectSensor KSensor;
+        
         public K()
         {
             InitializeComponent();
@@ -26,8 +28,11 @@ namespace WindowsFormsApp1
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e )
         {
+
+
+            
             if (btnStream.Text == "Stream") {
 
                 if (KinectSensor.KinectSensors.Count > 0) {
@@ -37,24 +42,34 @@ namespace WindowsFormsApp1
 
 
                 }
-
-                
+                   
+                Skeleton[] skeletons = new Skeleton[0];
                 KSensor.Start();
                 lboConnectionID.Text = KSensor.DeviceConnectionId;
+                KSensor.SkeletonFrameReady +=new EventHandler<SkeletonFrameReadyEventArgs>(KSensor_SkeletonFrameReady);
                 KSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
                 KSensor.ColorFrameReady += KSensor_ColorFrameReady;
 
+
             }
-            else
-            {
-                if (KSensor !=null && KSensor.IsRunning)
+            else if (KSensor.IsRunning)
                 {
                     KSensor.Stop();
-                    this.btnStream.Text = "Stream";
                     this.pbstream = null;
-               
+                   
                 }
-            }
+            
+        }
+
+       
+
+        int count = 0;
+        
+
+        private void KSensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
+        {
+            ++count;
+            this.lboNumber.Text = ""+count;
         }
 
         private void KSensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
@@ -82,5 +97,19 @@ namespace WindowsFormsApp1
             
         }
 
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbstream_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
