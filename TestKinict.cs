@@ -16,7 +16,10 @@ namespace WindowsFormsApp1
     public partial class K : Form
     {
 
+
+
         private KinectSensor KSensor;
+        List<Vector4> joints;
         
         public K()
         {
@@ -44,11 +47,20 @@ namespace WindowsFormsApp1
                 }
                    
                 Skeleton[] skeletons = new Skeleton[0];
-                KSensor.Start();
+
+                KSensor.SkeletonStream.Enable();
+                KSensor.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(KSensor_SkeletonFrameReady);
+                KinectSensor.KinectSensors.FirstOrDefault(s => s.Status == KinectStatus.Connected);
+                KSensor.DepthStream.Range = DepthRange.Near; // Depth in near range enabled
+                KSensor.SkeletonStream.EnableTrackingInNearRange = true; // enable returning skeletons while depth is in Near Range
+               
+              
+              KSensor.Start();
+              KSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+              KSensor.ColorFrameReady += KSensor_ColorFrameReady;
+           
+                
                 lboConnectionID.Text = KSensor.DeviceConnectionId;
-                KSensor.SkeletonFrameReady +=new EventHandler<SkeletonFrameReadyEventArgs>(KSensor_SkeletonFrameReady);
-                KSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                KSensor.ColorFrameReady += KSensor_ColorFrameReady;
 
 
             }
@@ -63,14 +75,60 @@ namespace WindowsFormsApp1
 
        
 
-        int count = 0;
-        
-
+       
         private void KSensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
-            ++count;
-            this.lboNumber.Text = ""+count;
-        }
+
+
+
+          
+          
+            using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame()) // Open the Skeleton frame
+            {
+             // get the skeletal information in this frame
+                    if (KSensor.SkeletonStream.TrackingMode == SkeletonTrackingMode.Default)
+                    {
+                    int n = skeletonFrame.SkeletonArrayLength;
+                    lboNumber.Text = "" + ++n;
+                    
+                }
+                    else
+                    {
+                    int n = skeletonFrame.SkeletonArrayLength;
+                    lboNumber.Text = "" + --n;
+                }
+                }
+            
+
+
+
+
+            joints = new List<Vector4>();
+
+          
+           
+            Microsoft.Kinect.Skeleton[] x = {};
+            //   Skeleton[] SDK = x;
+            //Frame.CopySkeletonDataTo(SDK);
+
+
+
+
+
+            //  foreach (Skeleton data in SDK)
+            { 
+                 //   if (data.TrackingState == SkeletonTrackingState.Tracked)
+                    {
+
+
+                       // int n = Frame.SkeletonArrayLength;
+                      //  lboNumber.Text = "" + n;
+
+
+                    }
+                }
+            }
+        
 
         private void KSensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
         {
@@ -87,15 +145,15 @@ namespace WindowsFormsApp1
             this.lboStatus.Text = KSensor.Status.ToString();
         }
 
-        private Bitmap CreateBitmapFromSensor(ColorImageFrame frame)
-        {
-            var pixelData = new byte[frame.PixelDataLength];
-            frame.CopyPixelDataTo(pixelData);
-
-            return pixelData.ToBitmap(frame.Width, frame.Height);
+        //private Bitmap CreateBitmapFromSensor(ColorImageFrame frame)
+        //{
+        //    var pixelData = new byte[frame.PixelDataLength];
+        //    frame.CopyPixelDataTo(pixelData);
+       
+        //    return pixelData.ToBitmap(frame.Width, frame.Height);
 
             
-        }
+        //}
 
         private void label4_Click(object sender, EventArgs e)
         {
