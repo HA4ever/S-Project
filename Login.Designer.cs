@@ -34,11 +34,10 @@
             this.PassBox = new System.Windows.Forms.TextBox();
             this.EXIT = new System.Windows.Forms.Button();
             this.LG_BUT = new System.Windows.Forms.Button();
-            this.userDBDataSet = new Measurement_System.UserDBDataSet();
+           
             this.userTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.userTableTableAdapter = new Measurement_System.UserDBDataSetTableAdapters.UserTableTableAdapter();
-            this.tableAdapterManager = new Measurement_System.UserDBDataSetTableAdapters.TableAdapterManager();
-            ((System.ComponentModel.ISupportInitialize)(this.userDBDataSet)).BeginInit();
+          
+        
             ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,23 +90,7 @@
             // 
             // userDBDataSet
             // 
-            this.userDBDataSet.DataSetName = "UserDBDataSet";
-            this.userDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // userTableBindingSource
-            // 
-            this.userTableBindingSource.DataMember = "UserTable";
-            this.userTableBindingSource.DataSource = this.userDBDataSet;
-            // 
-            // userTableTableAdapter
-            // 
-            this.userTableTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.UpdateOrder = Measurement_System.UserDBDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.UserTableTableAdapter = this.userTableTableAdapter;
+          
             // 
             // Login
             // 
@@ -124,7 +107,7 @@
             this.Name = "Login";
             this.Text = "MASUREMENT SYSTEM";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.userDBDataSet)).EndInit();
+           
             ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -139,10 +122,9 @@
         private System.Windows.Forms.Button LogIn;
         private System.Windows.Forms.Button EXIT;
         private System.Windows.Forms.Button LG_BUT;
-        private UserDBDataSet userDBDataSet;
+     
         private System.Windows.Forms.BindingSource userTableBindingSource;
-        private UserDBDataSetTableAdapters.UserTableTableAdapter userTableTableAdapter;
-        private UserDBDataSetTableAdapters.TableAdapterManager tableAdapterManager;
+    
     }
 }
 

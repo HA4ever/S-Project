@@ -1,21 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Measurement_System
 {
     public partial class AdminMain : Form
     {
+        int id = 0 ;
+        string TSize = "";
+        string PSize = "";
+        string name = "";
+
         public AdminMain()
         {
             InitializeComponent();
         }
+        public AdminMain(int id1,string name1 ,string TSize1,string PSize1)
+        {
+            InitializeComponent();
+            id = id1;
+            TSize = TSize1;
+            PSize = PSize1;
+            name = name1;
+        }
+
 
         private void EXIT_Click(object sender, EventArgs e)
         {
